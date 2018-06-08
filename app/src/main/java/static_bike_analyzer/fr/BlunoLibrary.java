@@ -1,4 +1,4 @@
-package static_bike_analyzer;
+package static_bike_analyzer.fr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static_bike_analyzer.R;
 
 public abstract  class BlunoLibrary  extends Activity{
 

@@ -1,4 +1,4 @@
-package static_bike_analyzer;
+package static_bike_analyzer.fr;
 
 import android.os.Bundle;
 import android.content.Intent;
@@ -15,7 +15,10 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class MainActivity  extends BlunoLibrary{
+import static_bike_analyzer.R;
+import static_bike_analyzer.fr.BlunoLibrary;
+
+public class MainActivity  extends BlunoLibrary {
 	private Button buttonScan;
 	private Button buttonSerialSend;
 	private EditText serialSendText;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package static_bike_analyzer;
+package static_bike_analyzer.fr;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;

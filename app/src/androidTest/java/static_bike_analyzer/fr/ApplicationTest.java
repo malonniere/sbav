@@ -1,4 +1,4 @@
-package static_bike_analyzer;
+package static_bike_analyzer.fr;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

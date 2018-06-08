@@ -1,4 +1,4 @@
-package static_bike_analyzer;
+package static_bike_analyzer.fr;
 
 @SuppressWarnings("unchecked")
 public class RingBuffer<T> {

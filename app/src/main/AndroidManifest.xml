@@ -19,7 +19,7 @@ PackageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE) -->
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="static_bike_analyzer.MainActivity"
+            android:name="static_bike_analyzer.fr.MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
@@ -28,7 +28,7 @@ PackageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE) -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="static_bike_analyzer.BluetoothLeService" android:enabled="true"/>
+        <service android:name="static_bike_analyzer.fr.BluetoothLeService" android:enabled="true"/>
 
     </application>
 
