@@ -15,7 +15,7 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import static_bike_analyzer.R;
+import static_bike_analyzer.fr.R;
 import static_bike_analyzer.fr.BlunoLibrary;
 
 public class MainActivity  extends BlunoLibrary {

@@ -15,6 +15,7 @@
  */
 
 package static_bike_analyzer.fr;
+//package
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;

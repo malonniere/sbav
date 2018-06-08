@@ -29,7 +29,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static_bike_analyzer.R;
+import static_bike_analyzer.fr.R;
 
 public abstract  class BlunoLibrary  extends Activity{
 
