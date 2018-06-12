@@ -1,7 +1,11 @@
 package static_bike_analyzer.fr;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,6 +23,14 @@ import static_bike_analyzer.fr.R;
 import static_bike_analyzer.fr.BlunoLibrary;
 
 public class MainActivity  extends BlunoLibrary {
+    private static final int REQUEST_BLUETOOTH = 1;
+    private static final int REQUEST_BLUETOOTH_ADMIN = 1;
+    private static final int REQUEST_BLUETOOTH_PRIVIILEDGED = 1;
+    private static String[] PERMISSIONS_BLUETOOTH = {
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.BLUETOOTH_PRIVILEGED
+    };
 	private Button buttonScan;
 	private Button buttonSerialSend;
 	private EditText serialSendText;
@@ -27,6 +39,8 @@ public class MainActivity  extends BlunoLibrary {
 	private GraphView graph;
 	private LineGraphSeries<DataPoint> series;
 	private double graph2LastXValue ;
+
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -183,5 +197,47 @@ public class MainActivity  extends BlunoLibrary {
 		//The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
 		//((ScrollView)serialReceivedText.getParent()).fullScroll(View.FOCUS_DOWN);
 	}
+
+
+//	private static void verifyBluetoothPermissions(Activity activity)
+//	{
+//		int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH);
+//		if( permission != PackageManager.PERMISSION_GRANTED)
+//		{
+////			ActivityCompat.requestPermissions(activity, PERMISSIONS_BLUETOOTH, REQUEST_BLUETOOTH);
+//			ActivityCompat.requestPermissions(activity, PERMISSIONS_BLUETOOTH, REQUEST_BLUETOOTH);
+//		}
+//	}
+//
+//	private static void verifyBluetoothPriviledgedPermissions(Activity activity)
+//	{
+//		// Check if we have write permission
+//        int permission = 0;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+//            permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_PRIVILEGED);
+//        }
+//
+//        if (permission != PackageManager.PERMISSION_GRANTED) {
+//			// We don't have permission so prompt the user
+//			ActivityCompat.requestPermissions(
+//					activity,	PERMISSIONS_BLUETOOTH, REQUEST_BLUETOOTH_PRIVIILEDGED
+//			);
+//		}
+//	}
+//
+//	private static void verifyBluetoothAdminPermissions(Activity activity)
+//	{
+//		// Check if we have write permission
+//		int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_ADMIN);
+//
+//		if (permission != PackageManager.PERMISSION_GRANTED) {
+//			// We don't have permission so prompt the user
+//			ActivityCompat.requestPermissions(
+//					activity,
+//                    PERMISSIONS_BLUETOOTH,
+//					REQUEST_BLUETOOTH_ADMIN
+//			);
+//		}
+//	}
 
 }
