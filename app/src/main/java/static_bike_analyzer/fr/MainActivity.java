@@ -3,6 +3,7 @@ package static_bike_analyzer.fr;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
@@ -38,6 +39,7 @@ public class MainActivity  extends BlunoLibrary {
 	private SpeedView speedView;
 	private GraphView graph;
 	private LineGraphSeries<DataPoint> series;
+	private LineGraphSeries<DataPoint> series2;
 	private double graph2LastXValue ;
 
 
@@ -75,18 +77,18 @@ public class MainActivity  extends BlunoLibrary {
 		graph.getViewport().setMinX(0);
 		graph.getViewport().setMaxX(400);
 		graph.getViewport().setMinY(0);
-		graph.getViewport().setMaxY(100);
+		graph.getViewport().setMaxY(150);
 		graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
-		series = new LineGraphSeries<>(new DataPoint[] {
-				new DataPoint(0, 1),
-				new DataPoint(1, 5),
-				new DataPoint(2, 3),
-				new DataPoint(3, 2),
-				new DataPoint(4, 6)
-		});
+		series = new LineGraphSeries<>();
 		series.setDrawBackground(true);
-
+		//series.setBackgroundColor((Color.argb(100, 255, 218, 172)));
 		graph.addSeries(series);
+		series2 = new LineGraphSeries<>();
+		series2.setDrawBackground(true);
+		series2.setColor((Color.argb(255, 255, 0, 0)));
+		series2.setBackgroundColor((Color.argb(100, 255, 0, 0)));
+		graph.addSeries(series2);
+
 		graph2LastXValue = 4d;
 
 
@@ -194,6 +196,7 @@ public class MainActivity  extends BlunoLibrary {
 
 			graph2LastXValue += 1d;
 			series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
+			series2.appendData(new DataPoint(graph2LastXValue, v+50), true, 400);
 		}catch(NumberFormatException e)
 		{
 			System.out.println("La chaine de caractères n'est pas un nombre parsable!!");

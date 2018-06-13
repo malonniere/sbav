@@ -245,7 +245,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         float graphLeft = graphView.getGraphContentLeft();
         float graphTop = graphView.getGraphContentTop();
 
-        lastEndY = 0;
+        lastEndY = 40;
         lastEndX = 0;
 
         // needed to end the path for background
@@ -344,6 +344,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
                 float startXAnimated = startX;
                 float endXAnimated = endX;
 
+
                 if (endX < startX) {
                     // dont draw from right to left
                     skipDraw = true;
@@ -440,11 +441,11 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
                     }
                     if (firstX == -1) {
                         firstX = startXAnimated;
-                        firstY = startY;
+                        firstY = 200;
                         mPathBackground.moveTo(startXAnimated, startY);
                     }
-                    mPathBackground.lineTo(startXAnimated, startY);
-                    mPathBackground.lineTo(endXAnimated, endY);
+                    mPathBackground.lineTo(startXAnimated, startY);//ici
+                    mPathBackground.lineTo(endXAnimated, endY);    //ici
                 }
 
                 lastUsedEndX = endXAnimated;
@@ -491,17 +492,23 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         }
 
         if (mStyles.drawBackground && firstX != -1) {
+            float targetY= (float)graphHeight + graphTop;
+            //special red series paint on the top
+            if (mPaintBackground.getColor()==(Color.argb(100, 255, 0, 0))){
+                targetY = (float)graphTop;
+            }
             // end / close path
             if (lastUsedEndY != graphHeight + graphTop) {
                 // dont draw line to same point, otherwise the path is completely broken
-                mPathBackground.lineTo((float) lastUsedEndX, graphHeight + graphTop);
+                mPathBackground.lineTo((float) lastUsedEndX, targetY);//graphHeight + graphTop);
             }
-            mPathBackground.lineTo(firstX, graphHeight + graphTop);
+            mPathBackground.lineTo(firstX, targetY);//graphHeight + graphTop);
             if (firstY != graphHeight + graphTop) {
                 // dont draw line to same point, otherwise the path is completely broken
                 mPathBackground.lineTo(firstX, firstY);
             }
             //mPathBackground.close();
+
             canvas.drawPath(mPathBackground, mPaintBackground);
         }
     }
