@@ -83,7 +83,7 @@ public abstract  class BlunoLibrary  extends Activity{
 	public connectionStateEnum mConnectionState = connectionStateEnum.isNull;
 	private static final int REQUEST_ENABLE_BT = 1;
 
-	private Handler mHandler= new Handler();
+	private Handler mHandler = new Handler();
 	
 	public boolean mConnected = false;
 
@@ -207,7 +207,6 @@ public abstract  class BlunoLibrary  extends Activity{
     
 
     public void onPauseProcess() {
-    /*Essai VB
     	System.out.println("BLUNOActivity onPause");
 		scanLeDevice(false);
 		mainContext.unregisterReceiver(mGattUpdateReceiver);
@@ -220,10 +219,10 @@ public abstract  class BlunoLibrary  extends Activity{
 			mBluetoothLeService.disconnect();
             mHandler.postDelayed(mDisonnectingOverTimeRunnable, 10000);
 
-//			mBluetoothLeService.close();
+			mBluetoothLeService.close();
 		}
 		mSCharacteristic=null;
-*/
+
 	}
 
 	
