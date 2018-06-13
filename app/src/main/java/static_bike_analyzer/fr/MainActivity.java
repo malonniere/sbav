@@ -17,7 +17,7 @@ import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+import static_bike_analyzer.fr.LineGraphSeries;
 
 import static_bike_analyzer.fr.R;
 import static_bike_analyzer.fr.BlunoLibrary;
