@@ -43,7 +43,6 @@ public class MainActivity  extends BlunoLibrary {
 	private double graph2LastXValue ;
 
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -123,7 +122,7 @@ public class MainActivity  extends BlunoLibrary {
 		System.out.println("BlUNOActivity onResume");
 		onResumeProcess(); //onResume Process by BlunoLibrary
 
-        buttonScanOnClickProcess();
+        //buttonScanOnClickProcess();
 
 	}
 	
@@ -153,7 +152,7 @@ public class MainActivity  extends BlunoLibrary {
     }
 
 	@Override
-	public void onConectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
+	public void onConnectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
 		switch (theConnectionState) {											//Four connection state
 		case isConnected:
 			buttonScan.setText("Connected");
@@ -164,7 +163,7 @@ public class MainActivity  extends BlunoLibrary {
 		case isToScan:
 			buttonScan.setText("Scan de nouveau");
 			mConnectionState=connectionStateEnum.isScanning;
-			onConectionStateChange(mConnectionState);
+			onConnectionStateChange(mConnectionState);
 			scanLeDevice(true);
 			mScanDeviceDialog.show();
 			break;
@@ -183,12 +182,12 @@ public class MainActivity  extends BlunoLibrary {
 	public void onSerialReceived(String theString) {							//Once connection data received, this function will be called
 
 		// TODO Auto-generated method stub
-		int v;
+		float v;
 		serialReceivedText.setText(theString);							//append the text into the EditText
 
 		try
 		{
-			v = Integer.parseInt(theString);
+			v = Float.parseFloat(theString);
 			//System.out.println (num);
 			//SpeedView speedView = (SpeedView) findViewById(R.id.speedView);
 			speedView.setWithTremble(false);
