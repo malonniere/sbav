@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+                                                                                               *
+ * MODIFIED SOFTWARE by Clément BESNIER and Vincent BAFOUR
  */
 package static_bike_analyzer.fr;
 

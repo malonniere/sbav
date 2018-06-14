@@ -160,9 +160,9 @@ public class BluetoothLeService extends Service {
 	            			
 	            	        if(mBluetoothGatt.writeCharacteristic(bluetoothGattCharacteristicHelper.mCharacteristic))
 	            	        {
-	            	        	System.out.println("writeCharacteristic init "+new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue())+ ":success");
+	            	        	System.out.println("writeCharacteristic init " + new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue()) + ":success");
 	            	        }else{
-	            	        	System.out.println("writeCharacteristic init "+new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue())+ ":failure");
+	            	        	System.out.println("writeCharacteristic init " + new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue()) + ":failure");
 	            	        }
 	            			bluetoothGattCharacteristicHelper.mCharacteristicValue = bluetoothGattCharacteristicHelper.mCharacteristicValue.substring(MAX_CHARACTERISTIC_LENGTH);
 	            		}
@@ -194,7 +194,7 @@ public class BluetoothLeService extends Service {
 	        	//WRITE a NEW CHARACTERISTIC
 	        	else if(status == WRITE_NEW_CHARACTERISTIC)
 	        	{
-	        		if((!mCharacteristicRingBuffer.isEmpty()) && mIsWritingCharacteristic==false)
+	        		if((!mCharacteristicRingBuffer.isEmpty()) && ! mIsWritingCharacteristic)
 	            	{
 	            		BluetoothGattCharacteristicHelper bluetoothGattCharacteristicHelper = mCharacteristicRingBuffer.next();
 	            		if(bluetoothGattCharacteristicHelper.mCharacteristicValue.length() > MAX_CHARACTERISTIC_LENGTH)
