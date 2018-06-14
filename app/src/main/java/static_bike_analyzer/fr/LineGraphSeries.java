@@ -119,6 +119,11 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
      * rendering is animated
      */
     private boolean mAnimated;
+    /**
+     *
+     * paint on top
+     */
+    private boolean mTop;
 
     /**
      * last animated value
@@ -492,9 +497,9 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         }
 
         if (mStyles.drawBackground && firstX != -1) {
-            float targetY= (float)graphHeight + graphTop;
-            //special red series paint on the top
-            if (mPaintBackground.getColor()==(Color.argb(100, 255, 0, 0))){
+            float targetY = graphHeight + graphTop;
+            //special  series paint on the top
+            if (mTop){
                 targetY = (float)graphTop;
             }
             // end / close path
@@ -646,6 +651,13 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
      */
     public void setAnimated(boolean animated) {
         this.mAnimated = animated;
+    }
+
+    /**
+     * @param ontop  paint on top
+     */
+    public void setOntop(boolean ontop) {
+        this.mTop = ontop;
     }
 
     /**

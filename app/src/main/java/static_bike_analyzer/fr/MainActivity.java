@@ -84,6 +84,7 @@ public class MainActivity  extends BlunoLibrary {
 		graph.addSeries(series);
 		series2 = new LineGraphSeries<>();
 		series2.setDrawBackground(true);
+		series2.setOntop(true);
 		series2.setColor((Color.argb(255, 255, 0, 0)));
 		series2.setBackgroundColor((Color.argb(100, 255, 0, 0)));
 		graph.addSeries(series2);
@@ -122,7 +123,7 @@ public class MainActivity  extends BlunoLibrary {
 		System.out.println("BlUNOActivity onResume");
 		onResumeProcess(); //onResume Process by BlunoLibrary
 
-        //buttonScanOnClickProcess();
+        buttonScanOnClickProcess();
 
 	}
 	
