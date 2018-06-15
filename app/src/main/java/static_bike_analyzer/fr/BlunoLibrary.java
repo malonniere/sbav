@@ -171,6 +171,7 @@ public abstract  class BlunoLibrary  extends Activity{
 						//onConnectionStateChange(mConnectionState);
 						mConnectionState=connectionStateEnum.isNull;//new VB
 						buttonScanOnClickProcess();//new VB
+
 					}
 		        }
 			}

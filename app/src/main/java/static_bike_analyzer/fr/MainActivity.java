@@ -88,7 +88,6 @@ public class MainActivity  extends BlunoLibrary {
 		series2.setColor((Color.argb(255, 255, 0, 0)));
 		series2.setBackgroundColor((Color.argb(100, 255, 0, 0)));
 		graph.addSeries(series2);
-
 		graph2LastXValue = 4d;
 
 

@@ -660,6 +660,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         this.mTop = ontop;
     }
 
+
     /**
      * flag whether the line should be drawn as a path
      * or with single drawLine commands (more performance)

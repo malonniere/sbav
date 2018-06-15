@@ -411,6 +411,7 @@ public class BluetoothLeService extends Service {
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
+
         System.out.println("device.connectGatt connect");
 		synchronized(this)
 		{
