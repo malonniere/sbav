@@ -219,7 +219,7 @@ public abstract  class BlunoLibrary  extends Activity{
 		scanLeDevice(false);
 		mainContext.unregisterReceiver(mGattUpdateReceiver);
 		mLeDeviceListAdapter.clear();
-    	mConnectionState=connectionStateEnum.isToScan;
+    	mConnectionState=connectionStateEnum.isDisconnecting;
     	onConnectionStateChange(mConnectionState);
 		mScanDeviceDialog.dismiss();
 		if(mBluetoothLeService!=null)
