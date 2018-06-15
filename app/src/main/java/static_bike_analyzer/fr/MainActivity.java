@@ -162,10 +162,10 @@ public class MainActivity  extends BlunoLibrary {
 			break;
 		case isToScan:
 			buttonScan.setText("Scan de nouveau");
-			mConnectionState=connectionStateEnum.isScanning;
-			onConnectionStateChange(mConnectionState);
-			scanLeDevice(true);
-			mScanDeviceDialog.show();
+//			mConnectionState=connectionStateEnum.isScanning;
+//			onConnectionStateChange(mConnectionState);
+//			scanLeDevice(true);
+//			mScanDeviceDialog.show();
 			break;
 		case isScanning:
 			buttonScan.setText("Scanning");
