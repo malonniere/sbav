@@ -167,10 +167,10 @@ public abstract  class BlunoLibrary  extends Activity{
 			        else {
 				        Log.d(TAG, "Connect request fail");
 
-						//mConnectionState=connectionStateEnum.isToScan;
-						//onConnectionStateChange(mConnectionState);
-						mConnectionState=connectionStateEnum.isNull;//new VB
-						buttonScanOnClickProcess();//new VB
+						mConnectionState=connectionStateEnum.isToScan;
+						onConnectionStateChange(mConnectionState);
+//						mConnectionState=connectionStateEnum.isNull;//new VB
+//						buttonScanOnClickProcess();//new VB
 
 					}
 		        }
