@@ -219,7 +219,9 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
             maxY = graphView.getViewport().getMaxY(false);
             minY = graphView.getViewport().getMinY(false);
         }
-
+        System.out.print("maxX");
+        System.out.println(maxX);
+        //if (maxX>400)maxX=400;
         Iterator<E> values = getValues(minX, maxX);
 
         // draw background
@@ -252,7 +254,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         float graphLeft = graphView.getGraphContentLeft();
         float graphTop = graphView.getGraphContentTop();
 
-        lastEndY = 40;
+        lastEndY = 0;
         lastEndX = 0;
 
         // needed to end the path for background
@@ -276,6 +278,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
             double y = graphHeight * ratY;
 
             double valueX = value.getX();
+            //if(valueX>400)break;
             double valX = valueX - minX;
             double ratX = valX / diffX;
             double x = graphWidth * ratX;

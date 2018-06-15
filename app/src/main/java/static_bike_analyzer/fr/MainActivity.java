@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.github.anastr.speedviewlib.ImageSpeedometer;
 import com.github.anastr.speedviewlib.SpeedView;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
@@ -36,7 +37,8 @@ public class MainActivity  extends BlunoLibrary {
 	private Button buttonSerialSend;
 	private EditText serialSendText;
 	private TextView serialReceivedText;
-	private SpeedView speedView;
+	//private SpeedView speedView;
+	private ImageSpeedometer speedView;
 	private GraphView graph;
 	private LineGraphSeries<DataPoint> series;
 	private LineGraphSeries<DataPoint> series2;
@@ -54,9 +56,10 @@ public class MainActivity  extends BlunoLibrary {
 
         serialReceivedText=(TextView) findViewById(R.id.serialReveicedText);	//initial the EditText of the received data
         serialSendText=(EditText) findViewById(R.id.serialSendText);			//initial the EditText of the sending data
-		speedView = (SpeedView) findViewById(R.id.speedView);
+		//speedView = (SpeedView) findViewById(R.id.speedView);
+        speedView = (ImageSpeedometer) findViewById(R.id.imageSpeedometer);
 
-		graph = (GraphView) findViewById(R.id.graph);
+        graph = (GraphView) findViewById(R.id.graph);
 		//ne marche pas
 		graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter()
         {
@@ -75,14 +78,22 @@ public class MainActivity  extends BlunoLibrary {
 		graph.getViewport().setYAxisBoundsManual(true);
 		graph.getViewport().setMinX(0);
 		graph.getViewport().setMaxX(400);
+        graph.getViewport().setMaxXAxisSize(400);
 		graph.getViewport().setMinY(0);
 		graph.getViewport().setMaxY(150);
 		graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
 		series = new LineGraphSeries<>();
+        series2 = new LineGraphSeries<>();
 		series.setDrawBackground(true);
 		//series.setBackgroundColor((Color.argb(100, 255, 218, 172)));
 		graph.addSeries(series);
-		series2 = new LineGraphSeries<>();
+		/*series2 = new LineGraphSeries<>(new DataPoint[]{
+				new DataPoint(0,1),
+				new DataPoint(10,2),
+				new DataPoint(30,50),
+				new DataPoint(350,50),
+				new DataPoint(600,60)
+		});*/
 		series2.setDrawBackground(true);
 		series2.setOntop(true);
 		series2.setColor((Color.argb(255, 255, 0, 0)));
@@ -161,7 +172,8 @@ public class MainActivity  extends BlunoLibrary {
 			buttonScan.setText("Connecting");
 			break;
 		case isToScan:
-			buttonScan.setText("Scan de nouveau");
+			buttonScan.setText("Reconnecter ");
+            buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
 //			mConnectionState=connectionStateEnum.isScanning;
 //			onConnectionStateChange(mConnectionState);
 //			scanLeDevice(true);
