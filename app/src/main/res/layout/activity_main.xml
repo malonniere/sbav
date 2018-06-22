@@ -61,7 +61,7 @@
 
     <com.github.anastr.speedviewlib.ImageSpeedometer
         android:id="@+id/imageSpeedometer"
-        android:layout_width="179dp"
+        android:layout_width="179dp" 
         android:layout_height="226dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
