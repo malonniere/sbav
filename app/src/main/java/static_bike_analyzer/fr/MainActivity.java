@@ -54,7 +54,7 @@ public class MainActivity  extends BlunoLibrary {
 
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
 
-        serialReceivedText=(TextView) findViewById(R.id.serialReveicedText);	//initial the EditText of the received data
+        serialReceivedText=(TextView) findViewById(R.id.editText2);	//initial the EditText of the received data
         serialSendText=(EditText) findViewById(R.id.serialSendText);			//initial the EditText of the sending data
 		//speedView = (SpeedView) findViewById(R.id.speedView);
         speedView = (ImageSpeedometer) findViewById(R.id.imageSpeedometer);
