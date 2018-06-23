@@ -125,16 +125,21 @@ public class MainActivity  extends BlunoLibrary {
 			}
 		});
 
-        buttonScanOnClickProcess();
+       buttonScanOnClickProcess();//starting auto?
 	}
 
+	public static boolean isActivityVisible() {
+		if (activityVisible) return true;
+		else return false;
+	}
+	private static boolean activityVisible;
+
 	protected void onResume(){
-		super.onResume();
+        activityVisible = true;
+	    super.onResume();
 		System.out.println("BlUNOActivity onResume");
 		onResumeProcess(); //onResume Process by BlunoLibrary
-
-        buttonScanOnClickProcess();
-
+        buttonScanOnClickProcess();//VB 23/06
 	}
 	
 	
@@ -147,18 +152,21 @@ public class MainActivity  extends BlunoLibrary {
 	
     @Override
     protected void onPause() {
-        super.onPause();
+        activityVisible = false;
+	    super.onPause();
         onPauseProcess();														//onPause Process by BlunoLibrary
     }
 	
 	protected void onStop() {
-		super.onStop();
+        activityVisible = false;
+	    super.onStop();
 		onStopProcess();														//onStop Process by BlunoLibrary
 	}
     
 	@Override
     protected void onDestroy() {
-        super.onDestroy();	
+        activityVisible = false;
+	    super.onDestroy();
         onDestroyProcess();														//onDestroy Process by BlunoLibrary
     }
 
@@ -173,7 +181,9 @@ public class MainActivity  extends BlunoLibrary {
 			break;
 		case isToScan:
 			buttonScan.setText("Reconnecter ");
-          //  buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
+          	if (isActivityVisible()){
+          		buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
+			}
 //			mConnectionState=connectionStateEnum.isScanning;
 //			onConnectionStateChange(mConnectionState);
 //			scanLeDevice(true);
@@ -219,45 +229,5 @@ public class MainActivity  extends BlunoLibrary {
 	}
 
 
-//	private static void verifyBluetoothPermissions(Activity activity)
-//	{
-//		int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH);
-//		if( permission != PackageManager.PERMISSION_GRANTED)
-//		{
-////			ActivityCompat.requestPermissions(activity, PERMISSIONS_BLUETOOTH, REQUEST_BLUETOOTH);
-//			ActivityCompat.requestPermissions(activity, PERMISSIONS_BLUETOOTH, REQUEST_BLUETOOTH);
-//		}
-//	}
-//
-//	private static void verifyBluetoothPriviledgedPermissions(Activity activity)
-//	{
-//		// Check if we have write permission
-//        int permission = 0;
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//            permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_PRIVILEGED);
-//        }
-//
-//        if (permission != PackageManager.PERMISSION_GRANTED) {
-//			// We don't have permission so prompt the user
-//			ActivityCompat.requestPermissions(
-//					activity,	PERMISSIONS_BLUETOOTH, REQUEST_BLUETOOTH_PRIVIILEDGED
-//			);
-//		}
-//	}
-//
-//	private static void verifyBluetoothAdminPermissions(Activity activity)
-//	{
-//		// Check if we have write permission
-//		int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_ADMIN);
-//
-//		if (permission != PackageManager.PERMISSION_GRANTED) {
-//			// We don't have permission so prompt the user
-//			ActivityCompat.requestPermissions(
-//					activity,
-//                    PERMISSIONS_BLUETOOTH,
-//					REQUEST_BLUETOOTH_ADMIN
-//			);
-//		}
-//	}
 
 }

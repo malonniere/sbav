@@ -330,7 +330,7 @@ public abstract  class BlunoLibrary  extends Activity{
 						
 					}
             		else {
-            			Toast.makeText(mainContext, "Please select DFRobot devices",Toast.LENGTH_SHORT).show();
+            			Toast.makeText(mainContext, "Please select TiltStart devices",Toast.LENGTH_SHORT).show();
                         mConnectionState = connectionStateEnum.isToScan;
                         onConnectionStateChange(mConnectionState);
 					}
@@ -353,6 +353,7 @@ public abstract  class BlunoLibrary  extends Activity{
     {
     	switch (mConnectionState) {
 			case isNull:
+            case isDisconnecting://modif vb23/06
 				mConnectionState = connectionStateEnum.isScanning;
 				onConnectionStateChange(mConnectionState);
 				scanLeDevice(true);
@@ -379,9 +380,8 @@ public abstract  class BlunoLibrary  extends Activity{
 				mConnectionState = connectionStateEnum.isDisconnecting;
 				onConnectionStateChange(mConnectionState);
 				break;
-			case isDisconnecting:
-
-				break;
+			//case isDisconnecting:
+			//	break;
 
 			default:
 				break;
@@ -457,7 +457,7 @@ public abstract  class BlunoLibrary  extends Activity{
 							Log.d(TAG, "Connect request success");
 							mConnectionState = connectionStateEnum.isConnecting;
 							onConnectionStateChange(mConnectionState);
-							mHandler.postDelayed(mConnectingOverTimeRunnable, 10000);
+							mHandler.postDelayed(mConnectingOverTimeRunnable, 12000);
 						} else {
 							Log.d(TAG, "Connect request fail");
 							mConnectionState = connectionStateEnum.isToScan;
