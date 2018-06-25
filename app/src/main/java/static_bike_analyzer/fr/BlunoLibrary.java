@@ -348,6 +348,7 @@ public abstract  class BlunoLibrary  extends Activity{
             }
         }
     };
+
     void buttonScanOnClickProcess()
     {
     	switch (mConnectionState) {
