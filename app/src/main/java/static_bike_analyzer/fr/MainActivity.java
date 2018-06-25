@@ -184,6 +184,7 @@ public class MainActivity  extends BlunoLibrary {
           	if (isActivityVisible()){
           		buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
 			}
+
 //			mConnectionState=connectionStateEnum.isScanning;
 //			onConnectionStateChange(mConnectionState);
 //			scanLeDevice(true);
