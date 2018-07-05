@@ -129,7 +129,7 @@ public class BluetoothLeService extends Service {
                 Log.w(TAG, "onServicesDiscovered received: " + status);
             }
         }
-        
+        // à voir
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status)
         {
