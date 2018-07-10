@@ -434,6 +434,32 @@ public abstract  class BlunoLibrary  extends Activity{
         }
     };
 
+
+	Runnable selectDevice(final BluetoothDevice device)
+	{
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				mDeviceName = device.getName();
+				mDeviceAddress = device.getAddress();
+				System.out.println("onListItemClick " + device.getName());
+				System.out.println("Device Name:" + device.getName() + "   " + "Device Name:" + device.getAddress());
+				mScanDeviceDialog.hide();
+				if (mBluetoothLeService.connect(mDeviceAddress)) {
+					Log.d(TAG, "Connect request success");
+					mConnectionState = connectionStateEnum.isConnecting;
+					onConnectionStateChange(mConnectionState);
+					mHandler.postDelayed(mConnectingOverTimeRunnable, 12000);
+				} else {
+					Log.d(TAG, "Connect request fail");
+					mConnectionState = connectionStateEnum.isToScan;
+					onConnectionStateChange(mConnectionState);
+				}
+			}
+		};
+		return r;
+	}
+
 	// Device scan callback.
 	private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
 
@@ -448,21 +474,7 @@ public abstract  class BlunoLibrary  extends Activity{
 					mLeDeviceListAdapter.notifyDataSetChanged();
 
 					if (device.getName()!=null && device.getAddress()!=null && device.getName().startsWith("Bluno")) {
-						mDeviceName=device.getName();
-						mDeviceAddress=device.getAddress();
-						System.out.println("onListItemClick " + device.getName());
-						System.out.println("Device Name:"+device.getName() + "   " + "Device Name:" + device.getAddress());
-						mScanDeviceDialog.hide();
-						if (mBluetoothLeService.connect(mDeviceAddress)) {
-							Log.d(TAG, "Connect request success");
-							mConnectionState = connectionStateEnum.isConnecting;
-							onConnectionStateChange(mConnectionState);
-							mHandler.postDelayed(mConnectingOverTimeRunnable, 12000);
-						} else {
-							Log.d(TAG, "Connect request fail");
-							mConnectionState = connectionStateEnum.isToScan;
-							onConnectionStateChange(mConnectionState);
-						}
+						mHandler.postDelayed(selectDevice(device), 4000);
 					}
 				}
 			});

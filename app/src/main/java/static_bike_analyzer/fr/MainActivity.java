@@ -4,9 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,10 +22,18 @@ import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.*;
+
 import static_bike_analyzer.fr.LineGraphSeries;
 
 import static_bike_analyzer.fr.R;
 import static_bike_analyzer.fr.BlunoLibrary;
+
+
+
 
 public class MainActivity  extends BlunoLibrary {
     private static final int REQUEST_BLUETOOTH = 1;
@@ -42,7 +53,10 @@ public class MainActivity  extends BlunoLibrary {
 	private GraphView graph;
 	private LineGraphSeries<DataPoint> series;
 	private LineGraphSeries<DataPoint> series2;
+    private LineGraphSeries<DataPoint> series3;
 	private double graph2LastXValue ;
+	private double vRevive; ;
+	private String TAG = "MAin";
 
 
 	@Override
@@ -50,6 +64,28 @@ public class MainActivity  extends BlunoLibrary {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
         onCreateProcess();														//onCreate Process by BlunoLibrary
+
+
+
+        // creating timer task, timer
+        TimerTask tache = new TimerTask() {
+                @Override
+                public void run() {
+                    Log.d(TAG, "working at fixed rate delay");
+                    graph2LastXValue += 1d;
+			        double v ;
+			        v=Math.sin(Math.toRadians(graph2LastXValue))*50+50;
+                        series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
+            			series2.appendData(new DataPoint(graph2LastXValue, v+50), true, 400);
+                        series3.appendData(new DataPoint(graph2LastXValue, vRevive), true, 400);
+                }
+            };
+        Timer timere = new Timer();
+        timere.schedule(tache, 500l, 100l);
+
+
+
+
 
 
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
@@ -84,6 +120,7 @@ public class MainActivity  extends BlunoLibrary {
 		graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
 		series = new LineGraphSeries<>();
         series2 = new LineGraphSeries<>();
+        series3 = new LineGraphSeries<>();
 		series.setDrawBackground(true);
 		//series.setBackgroundColor((Color.argb(100, 255, 218, 172)));
 		graph.addSeries(series);
@@ -99,6 +136,8 @@ public class MainActivity  extends BlunoLibrary {
 		series2.setColor((Color.argb(255, 255, 0, 0)));
 		series2.setBackgroundColor((Color.argb(100, 255, 0, 0)));
 		graph.addSeries(series2);
+        series3.setBackgroundColor((Color.argb(100, 0, 255, 0)));
+        graph.addSeries(series3);
 		graph2LastXValue = 4d;
 
 
@@ -215,10 +254,10 @@ public class MainActivity  extends BlunoLibrary {
 			//SpeedView speedView = (SpeedView) findViewById(R.id.speedView);
 			speedView.setWithTremble(false);
 			speedView.speedTo(v,0);
-
-			graph2LastXValue += 1d;
-			series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
-			series2.appendData(new DataPoint(graph2LastXValue, v+50), true, 400);
+			vRevive=v;
+//			graph2LastXValue += 1d;
+//			series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
+//			series2.appendData(new DataPoint(graph2LastXValue, v+50), true, 400);
 		}catch(NumberFormatException e)
 		{
 			System.out.println("La chaine de caractères n'est pas un nombre parsable!!");
@@ -229,6 +268,12 @@ public class MainActivity  extends BlunoLibrary {
 		//((ScrollView)serialReceivedText.getParent()).fullScroll(View.FOCUS_DOWN);
 	}
 
+//    new Timer().scheduleAtFixedRate(new TimerTask(){
+//        @Override
+//        public void run(){
+//            System.out.println("A Kiss every 5 seconds");
+//        }
+//    },0,5000);
 
 
 }
