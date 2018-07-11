@@ -55,8 +55,10 @@ public class MainActivity  extends BlunoLibrary {
 	private LineGraphSeries<DataPoint> series2;
     private LineGraphSeries<DataPoint> series3;
 	private double graph2LastXValue ;
-	private double vRevive; ;
+	private double vRevive;
 	private String TAG = "MAin";
+
+	private GraphManager gm;
 
 
 	@Override
@@ -66,6 +68,8 @@ public class MainActivity  extends BlunoLibrary {
         onCreateProcess();														//onCreate Process by BlunoLibrary
 
 
+		gm = new GraphManager();
+		gm.set_f(0.5, 15);
 
         // creating timer task, timer
         TimerTask tache = new TimerTask() {
@@ -76,16 +80,12 @@ public class MainActivity  extends BlunoLibrary {
 			        double v ;
 			        v=Math.sin(Math.toRadians(graph2LastXValue))*50+50;
                         series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
-            			series2.appendData(new DataPoint(graph2LastXValue, v+50), true, 400);
+            			series2.appendData(new DataPoint(graph2LastXValue, gm.f(graph2LastXValue)), true, 400);
                         series3.appendData(new DataPoint(graph2LastXValue, vRevive), true, 400);
                 }
             };
         Timer timere = new Timer();
-        timere.schedule(tache, 500l, 100l);
-
-
-
-
+        timere.schedule(tache, 500L, 100L);
 
 
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
