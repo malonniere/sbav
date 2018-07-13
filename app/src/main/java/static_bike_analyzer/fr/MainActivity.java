@@ -67,9 +67,19 @@ public class MainActivity  extends BlunoLibrary {
 		setContentView(R.layout.activity_main);
         onCreateProcess();														//onCreate Process by BlunoLibrary
 
+        ArrayList<DataPoint> ldp = new ArrayList<DataPoint>();
+        ldp.add(new DataPoint(0, 40));
+        ldp.add(new DataPoint(40, 60));
+        ldp.add(new DataPoint(90, 140));
+        ldp.add(new DataPoint(120, 70));
+        ldp.add(new DataPoint(150, 120));
+        gm = new GraphManager();
+        gm.setSeries(ldp);
 
-		gm = new GraphManager();
-		gm.set_f(0.5, 15);
+
+
+//		gm.set_f(0.5, 15);
+//		gm.example();
 
         // creating timer task, timer
         TimerTask tache = new TimerTask() {
@@ -79,7 +89,7 @@ public class MainActivity  extends BlunoLibrary {
                     graph2LastXValue += 1d;
 			        double v ;
 			        v=Math.sin(Math.toRadians(graph2LastXValue))*50+50;
-                        series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
+                        series.appendData(new DataPoint(graph2LastXValue, gm.getExtrapolation(graph2LastXValue, 0)), true, 400);
             			series2.appendData(new DataPoint(graph2LastXValue, gm.f(graph2LastXValue)), true, 400);
                         series3.appendData(new DataPoint(graph2LastXValue, vRevive), true, 400);
                 }
