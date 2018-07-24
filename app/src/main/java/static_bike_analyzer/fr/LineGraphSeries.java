@@ -23,6 +23,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 
 import com.jjoe64.graphview.GraphView;
@@ -219,8 +220,8 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
             maxY = graphView.getViewport().getMaxY(false);
             minY = graphView.getViewport().getMinY(false);
         }
-        System.out.print("maxX");
-        System.out.println(maxX);
+        //System.out.print("maxX");
+        //System.out.println(maxX);
         //if (maxX>400)maxX=400;
         Iterator<E> values = getValues(minX, maxX);
 
@@ -271,7 +272,16 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         float maxYOnSameX = 0f;
 
         while (values.hasNext()) {
-            E value = values.next();
+//            try{
+                E value = values.next();
+//            }
+//            catch (Exception e)
+//            {
+//                Log.d("linegraphseries", "concurrence !");
+//                break;
+//            }
+
+
 
             double valY = value.getY() - minY;
             double ratY = valY / diffY;

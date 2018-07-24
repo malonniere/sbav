@@ -49,14 +49,14 @@ public class GraphManager {
             {
                 return ldp.get(j).getY();
             }
-            Log.d("GM", "x avant : "+ldp.get(j).getX()+" x après : " + ldp.get(j+1).getX());
+            //Log.d("GM", "x avant : "+ldp.get(j).getX()+" x après : " + ldp.get(j+1).getX());
             if((ldp.get(j).getX() <= x) && (x <= ldp.get(j + 1).getX()) && ldp.get(j).getX() != ldp.get(j + 1).getX())
             {
                 xBefore = ldp.get(j).getX();
                 yBefore = ldp.get(j).getY();
                 xAfter = ldp.get(j + 1).getX();
                 yAfter = ldp.get(j + 1).getY();
-                Log.d("GM", "ok");
+                //Log.d("GM", "ok");
 
                 m = (yAfter - yBefore)/(xAfter - xBefore);
                 p = yBefore - m*xBefore;

@@ -94,9 +94,7 @@ public abstract  class BlunoLibrary  extends Activity{
 		@Override
 		public void run() {
         	if(mConnectionState==connectionStateEnum.isConnecting)
-        	{
-        	    mConnectionState=connectionStateEnum.isToScan;
-        	}
+			mConnectionState=connectionStateEnum.isToScan;
 			onConnectionStateChange(mConnectionState);
 			mBluetoothLeService.close();
 		}};
@@ -106,9 +104,7 @@ public abstract  class BlunoLibrary  extends Activity{
 		@Override
 		public void run() {
         	if(mConnectionState==connectionStateEnum.isDisconnecting)
-        	    {
-        	        mConnectionState=connectionStateEnum.isToScan;
-        	        }
+			mConnectionState=connectionStateEnum.isToScan;
 			onConnectionStateChange(mConnectionState);
 			mBluetoothLeService.close();
 		}};
@@ -166,12 +162,8 @@ public abstract  class BlunoLibrary  extends Activity{
 		        	}
 			        else {
 				        Log.d(TAG, "Connect request fail");
-
-						mConnectionState=connectionStateEnum.isToScan;
-						onConnectionStateChange(mConnectionState);
-//						mConnectionState=connectionStateEnum.isNull;//new VB
-//						buttonScanOnClickProcess();//new VB
-
+			        	mConnectionState=connectionStateEnum.isToScan;
+			        	onConnectionStateChange(mConnectionState);
 					}
 		        }
 			}
@@ -219,7 +211,7 @@ public abstract  class BlunoLibrary  extends Activity{
 		scanLeDevice(false);
 		mainContext.unregisterReceiver(mGattUpdateReceiver);
 		mLeDeviceListAdapter.clear();
-    	mConnectionState=connectionStateEnum.isDisconnecting;
+    	mConnectionState=connectionStateEnum.isToScan;
     	onConnectionStateChange(mConnectionState);
 		mScanDeviceDialog.dismiss();
 		if(mBluetoothLeService!=null)
@@ -227,7 +219,7 @@ public abstract  class BlunoLibrary  extends Activity{
 			mBluetoothLeService.disconnect();
             mHandler.postDelayed(mDisonnectingOverTimeRunnable, 10000);
 
-			mBluetoothLeService.close();
+//			mBluetoothLeService.close();
 		}
 		mSCharacteristic = null;
 
@@ -256,6 +248,7 @@ public abstract  class BlunoLibrary  extends Activity{
 		if (requestCode == REQUEST_ENABLE_BT
 				&& resultCode == Activity.RESULT_CANCELED) {
 			((Activity) mainContext).finish();
+			return;
 		}
 	}
 
@@ -273,9 +266,7 @@ public abstract  class BlunoLibrary  extends Activity{
 		// reference to
 		// BluetoothAdapter through BluetoothManager.
 		final BluetoothManager bluetoothManager = (BluetoothManager) mainContext.getSystemService(Context.BLUETOOTH_SERVICE);
-		if (bluetoothManager != null) {
-			mBluetoothAdapter = bluetoothManager.getAdapter();
-		}
+		mBluetoothAdapter = bluetoothManager.getAdapter();
 
 		// Checks if Bluetooth is supported on the device.
 		if (mBluetoothAdapter == null) {
@@ -353,7 +344,6 @@ public abstract  class BlunoLibrary  extends Activity{
     {
     	switch (mConnectionState) {
 			case isNull:
-            case isDisconnecting://modif vb23/06
 				mConnectionState = connectionStateEnum.isScanning;
 				onConnectionStateChange(mConnectionState);
 				scanLeDevice(true);
@@ -377,11 +367,12 @@ public abstract  class BlunoLibrary  extends Activity{
 				mHandler.postDelayed(mDisonnectingOverTimeRunnable, 10000);
 
 //			mBluetoothLeService.close();
-				mConnectionState = connectionStateEnum.isDisconnecting;
-				onConnectionStateChange(mConnectionState);
-				break;
-			//case isDisconnecting:
-			//	break;
+			mConnectionState=connectionStateEnum.isDisconnecting;
+			onConnectionStateChange(mConnectionState);
+			break;
+		case isDisconnecting:
+
+			break;
 
 			default:
 				break;
@@ -449,7 +440,7 @@ public abstract  class BlunoLibrary  extends Activity{
 					Log.d(TAG, "Connect request success");
 					mConnectionState = connectionStateEnum.isConnecting;
 					onConnectionStateChange(mConnectionState);
-					mHandler.postDelayed(mConnectingOverTimeRunnable, 12000);
+					mHandler.postDelayed(mConnectingOverTimeRunnable, 10000);
 				} else {
 					Log.d(TAG, "Connect request fail");
 					mConnectionState = connectionStateEnum.isToScan;
@@ -474,7 +465,22 @@ public abstract  class BlunoLibrary  extends Activity{
 					mLeDeviceListAdapter.notifyDataSetChanged();
 
 					if (device.getName()!=null && device.getAddress()!=null && device.getName().startsWith("Bluno")) {
-						mHandler.postDelayed(selectDevice(device), 4000);
+						//mHandler.postDelayed(selectDevice(device), 1000);//autoselect
+						mDeviceName = device.getName();
+						mDeviceAddress = device.getAddress();
+						System.out.println("onListItemClick " + device.getName());
+						System.out.println("Device Name:" + device.getName() + "   " + "Device Name:" + device.getAddress());
+						mScanDeviceDialog.hide();
+						if (mBluetoothLeService.connect(mDeviceAddress)) {
+							Log.d(TAG, "Connect request success");
+							mConnectionState = connectionStateEnum.isConnecting;
+							onConnectionStateChange(mConnectionState);
+							mHandler.postDelayed(mConnectingOverTimeRunnable, 10000);//12000
+						} else {
+							Log.d(TAG, "Connect request fail");
+							mConnectionState = connectionStateEnum.isToScan;
+							onConnectionStateChange(mConnectionState);
+						}
 					}
 				}
 			});

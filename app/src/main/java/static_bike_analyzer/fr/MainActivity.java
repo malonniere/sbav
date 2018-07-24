@@ -68,11 +68,11 @@ public class MainActivity  extends BlunoLibrary {
         onCreateProcess();														//onCreate Process by BlunoLibrary
 
         ArrayList<DataPoint> ldp = new ArrayList<DataPoint>();
-        ldp.add(new DataPoint(0, 40));
-        ldp.add(new DataPoint(40, 60));
-        ldp.add(new DataPoint(90, 140));
-        ldp.add(new DataPoint(120, 70));
-        ldp.add(new DataPoint(150, 120));
+        ldp.add(new DataPoint(0, 0));
+        ldp.add(new DataPoint(200, 25));
+        ldp.add(new DataPoint(400, 25));
+        ldp.add(new DataPoint(1200, 15));
+        ldp.add(new DataPoint(1500, 45));
         gm = new GraphManager();
         gm.setSeries(ldp);
 
@@ -88,14 +88,21 @@ public class MainActivity  extends BlunoLibrary {
                     Log.d(TAG, "working at fixed rate delay");
                     graph2LastXValue += 1d;
 			        double v ;
-			        v=Math.sin(Math.toRadians(graph2LastXValue))*50+50;
-                        series.appendData(new DataPoint(graph2LastXValue, gm.getExtrapolation(graph2LastXValue, 0)), true, 400);
-            			series2.appendData(new DataPoint(graph2LastXValue, gm.f(graph2LastXValue)), true, 400);
-                        series3.appendData(new DataPoint(graph2LastXValue, vRevive), true, 400);
+			        //v=Math.sin(Math.toRadians(graph2LastXValue))*50+50;
+					v=gm.getExtrapolation(graph2LastXValue, 0);
+					try {
+						series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
+//						Thread.sleep(15);
+						series2.appendData(new DataPoint(graph2LastXValue, v + 20), false, 400);
+//						Thread.sleep(15);
+						series3.appendData(new DataPoint(graph2LastXValue, vRevive), true, 400);
+					}catch(Exception e){
+						Log.d(TAG, "GraphExeption"+e.getMessage());
+					}
                 }
             };
         Timer timere = new Timer();
-        timere.schedule(tache, 500L, 100L);
+        timere.schedule(tache, 500L, 50L);
 
 
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
@@ -126,7 +133,7 @@ public class MainActivity  extends BlunoLibrary {
 		graph.getViewport().setMaxX(400);
         graph.getViewport().setMaxXAxisSize(400);
 		graph.getViewport().setMinY(0);
-		graph.getViewport().setMaxY(150);
+		graph.getViewport().setMaxY(80);
 		graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
 		series = new LineGraphSeries<>();
         series2 = new LineGraphSeries<>();
@@ -148,6 +155,7 @@ public class MainActivity  extends BlunoLibrary {
 		graph.addSeries(series2);
         series3.setBackgroundColor((Color.argb(100, 0, 255, 0)));
         graph.addSeries(series3);
+
 		graph2LastXValue = 4d;
 
 
@@ -174,7 +182,7 @@ public class MainActivity  extends BlunoLibrary {
 			}
 		});
 
-       buttonScanOnClickProcess();//starting auto?
+       //buttonScanOnClickProcess();//starting auto?
 	}
 
 	public static boolean isActivityVisible() {
@@ -188,7 +196,7 @@ public class MainActivity  extends BlunoLibrary {
 	    super.onResume();
 		System.out.println("BlUNOActivity onResume");
 		onResumeProcess(); //onResume Process by BlunoLibrary
-        buttonScanOnClickProcess();//VB 23/06
+        //buttonScanOnClickProcess();//VB 23/06 supprime le 19/07
 	}
 	
 	
@@ -231,13 +239,13 @@ public class MainActivity  extends BlunoLibrary {
 		case isToScan:
 			buttonScan.setText("Reconnecter ");
           	if (isActivityVisible()){
-          		buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
+          		//buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
 			}
 
-//			mConnectionState=connectionStateEnum.isScanning;
-//			onConnectionStateChange(mConnectionState);
-//			scanLeDevice(true);
-//			mScanDeviceDialog.show();
+//			mConnectionState=connectionStateEnum.isScanning;//remis en place 21/07
+//			onConnectionStateChange(mConnectionState);//
+//			scanLeDevice(true);//
+//			mScanDeviceDialog.show();//
 			break;
 		case isScanning:
 			buttonScan.setText("Scanning");
