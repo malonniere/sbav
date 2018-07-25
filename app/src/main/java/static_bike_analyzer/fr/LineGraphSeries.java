@@ -282,7 +282,6 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
             }
 
 
-            value = values.next();
             double valY = value.getY() - minY;
             double ratY = valY / diffY;
             double y = graphHeight * ratY;

@@ -45,6 +45,7 @@ public class MainActivity  extends BlunoLibrary {
             Manifest.permission.BLUETOOTH_PRIVILEGED
     };
 	private Button buttonScan;
+	private Button buttonRz;
 	private Button buttonSerialSend;
 	private EditText serialSendText;
 	private TextView serialReceivedText;
@@ -69,10 +70,10 @@ public class MainActivity  extends BlunoLibrary {
 
         ArrayList<DataPoint> ldp = new ArrayList<DataPoint>();
         ldp.add(new DataPoint(0, 0));
-        ldp.add(new DataPoint(200, 25));
+        ldp.add(new DataPoint(200, 15));
         ldp.add(new DataPoint(400, 25));
         ldp.add(new DataPoint(1200, 15));
-        ldp.add(new DataPoint(1500, 45));
+        ldp.add(new DataPoint(1500, 35));
         gm = new GraphManager();
         gm.setSeries(ldp);
 
@@ -100,7 +101,7 @@ public class MainActivity  extends BlunoLibrary {
                 }
             };
         Timer timere = new Timer();
-        timere.schedule(tache, 500L, 100l);
+        timere.schedule(tache, 500L, 100L);
 
 
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
@@ -131,7 +132,7 @@ public class MainActivity  extends BlunoLibrary {
 		graph.getViewport().setMaxX(400);
         graph.getViewport().setMaxXAxisSize(400);
 		graph.getViewport().setMinY(0);
-		graph.getViewport().setMaxY(80);
+		graph.getViewport().setMaxY(60);
 		graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
 		series = new LineGraphSeries<>();
         series2 = new LineGraphSeries<>();
@@ -149,7 +150,7 @@ public class MainActivity  extends BlunoLibrary {
 		series2.setDrawBackground(true);
 		series2.setOntop(true);
 		series2.setColor((Color.argb(255, 255, 0, 0)));
-		series2.setBackgroundColor((Color.argb(100, 255, 0, 0)));
+		series2.setBackgroundColor((Color.argb(50, 255, 0, 0)));
 		graph.addSeries(series2);
         series3.setBackgroundColor((Color.argb(100, 0, 255, 0)));
         graph.addSeries(series3);
@@ -179,8 +180,16 @@ public class MainActivity  extends BlunoLibrary {
 				buttonScanOnClickProcess();										//Alert Dialog for selecting the BLE device
 			}
 		});
-
-       //buttonScanOnClickProcess();//starting auto?
+		buttonRz = (Button) findViewById(R.id.buttonRz);					//initial the RZ button
+		buttonRz.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				series.resetData(new DataPoint[] {});
+				series2.resetData(new DataPoint[] {});
+				series3.resetData(new DataPoint[] {});
+				graph2LastXValue=0;
+			}
+		});
 	}
 
 	public static boolean isActivityVisible() {
@@ -237,7 +246,7 @@ public class MainActivity  extends BlunoLibrary {
 		case isToScan:
 			buttonScan.setText("Reconnecter ");
           	if (isActivityVisible()){
-          		//buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
+          		buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
 			}
 
 //			mConnectionState=connectionStateEnum.isScanning;//remis en place 21/07
