@@ -91,18 +91,16 @@ public class MainActivity  extends BlunoLibrary {
 			        //v=Math.sin(Math.toRadians(graph2LastXValue))*50+50;
 					v=gm.getExtrapolation(graph2LastXValue, 0);
 					try {
-						series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
-//						Thread.sleep(15);
-						series2.appendData(new DataPoint(graph2LastXValue, v + 20), false, 400);
-//						Thread.sleep(15);
-						series3.appendData(new DataPoint(graph2LastXValue, vRevive), true, 400);
+						series3.appendData(new DataPoint(graph2LastXValue, vRevive), false,400,true);
+						series2.appendData(new DataPoint(graph2LastXValue, v + 20), false, 400,true);
+						series.appendData(new DataPoint(graph2LastXValue, v), true, 400,false);
 					}catch(Exception e){
 						Log.d(TAG, "GraphExeption"+e.getMessage());
 					}
                 }
             };
         Timer timere = new Timer();
-        timere.schedule(tache, 500L, 50L);
+        timere.schedule(tache, 500L, 100l);
 
 
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200

@@ -272,17 +272,17 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         float maxYOnSameX = 0f;
 
         while (values.hasNext()) {
-//            try{
-                E value = values.next();
-//            }
-//            catch (Exception e)
-//            {
-//                Log.d("linegraphseries", "concurrence !");
-//                break;
-//            }
+            E value;
+            try {
+                value = values.next();
+            }catch (Exception e)
+            {
+                Log.d("linegraphseries", "concurrence !");
+                break;
+            }
 
 
-
+            value = values.next();
             double valY = value.getY() - minY;
             double ratY = valY / diffY;
             double y = graphHeight * ratY;
