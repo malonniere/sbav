@@ -49,7 +49,7 @@ public class MainActivity  extends BlunoLibrary {
 	private Button buttonSerialSend;
 	private EditText serialSendText;
 	private TextView serialReceivedText;
-	//private SpeedView speedView;
+	private TextView maxView;
 	private ImageSpeedometer speedView;
 	private GraphView graph;
 	private LineGraphSeries<DataPoint> series;
@@ -57,6 +57,7 @@ public class MainActivity  extends BlunoLibrary {
     private LineGraphSeries<DataPoint> series3;
 	private double graph2LastXValue ;
 	private double vRevive;
+	private double vMax=0;
 	private String TAG = "MAin";
 
 	private GraphManager gm;
@@ -105,8 +106,8 @@ public class MainActivity  extends BlunoLibrary {
 
 
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
-
-        serialReceivedText=(TextView) findViewById(R.id.editText2);	//initial the EditText of the received data
+		maxView=(TextView) findViewById(R.id.maxSpeed);
+        serialReceivedText=(TextView) findViewById(R.id.editText2);	            //initial the EditText of the received data
         serialSendText=(EditText) findViewById(R.id.serialSendText);			//initial the EditText of the sending data
 		//speedView = (SpeedView) findViewById(R.id.speedView);
         speedView = (ImageSpeedometer) findViewById(R.id.imageSpeedometer);
@@ -140,13 +141,6 @@ public class MainActivity  extends BlunoLibrary {
 		series.setDrawBackground(true);
 		//series.setBackgroundColor((Color.argb(100, 255, 218, 172)));
 		graph.addSeries(series);
-		/*series2 = new LineGraphSeries<>(new DataPoint[]{
-				new DataPoint(0,1),
-				new DataPoint(10,2),
-				new DataPoint(30,50),
-				new DataPoint(350,50),
-				new DataPoint(600,60)
-		});*/
 		series2.setDrawBackground(true);
 		series2.setOntop(true);
 		series2.setColor((Color.argb(255, 255, 0, 0)));
@@ -180,7 +174,7 @@ public class MainActivity  extends BlunoLibrary {
 				buttonScanOnClickProcess();										//Alert Dialog for selecting the BLE device
 			}
 		});
-		buttonRz = (Button) findViewById(R.id.buttonRz);					//initial the RZ button
+		buttonRz = (Button) findViewById(R.id.buttonRz);						//initial the RZ button
 		buttonRz.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -188,6 +182,8 @@ public class MainActivity  extends BlunoLibrary {
 				series2.resetData(new DataPoint[] {});
 				series3.resetData(new DataPoint[] {});
 				graph2LastXValue=0;
+				vMax=0;
+				maxView.setText(String.valueOf(vMax)+"Km/h");
 			}
 		});
 	}
@@ -246,7 +242,7 @@ public class MainActivity  extends BlunoLibrary {
 		case isToScan:
 			buttonScan.setText("Reconnecter ");
           	if (isActivityVisible()){
-          		buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
+          		//buttonScanOnClickProcess();//VB 15/06 pour tentative de reconnexion automatique
 			}
 
 //			mConnectionState=connectionStateEnum.isScanning;//remis en place 21/07
@@ -280,6 +276,10 @@ public class MainActivity  extends BlunoLibrary {
 			speedView.setWithTremble(false);
 			speedView.speedTo(v,0);
 			vRevive=v;
+			if (v>vMax){
+				vMax=v;
+				maxView.setText(String.valueOf(vMax)+"Km/h");
+			}
 //			graph2LastXValue += 1d;
 //			series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
 //			series2.appendData(new DataPoint(graph2LastXValue, v+50), true, 400);
