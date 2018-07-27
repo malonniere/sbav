@@ -46,8 +46,8 @@ public class MainActivity  extends BlunoLibrary {
     };
 	private Button buttonScan;
 	private Button buttonRz;
-	private Button buttonSerialSend;
-	private EditText serialSendText;
+//	private Button buttonSerialSend;
+//	private EditText serialSendText;
 	private TextView serialReceivedText;
 	private TextView maxView;
 	private ImageSpeedometer speedView;
@@ -108,8 +108,7 @@ public class MainActivity  extends BlunoLibrary {
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
 		maxView=(TextView) findViewById(R.id.maxSpeed);
         serialReceivedText=(TextView) findViewById(R.id.editText2);	            //initial the EditText of the received data
-        serialSendText=(EditText) findViewById(R.id.serialSendText);			//initial the EditText of the sending data
-		//speedView = (SpeedView) findViewById(R.id.speedView);
+//        serialSendText=(EditText) findViewById(R.id.serialSendText);			//initial the EditText of the sending data
         speedView = (ImageSpeedometer) findViewById(R.id.imageSpeedometer);
 
         graph = (GraphView) findViewById(R.id.graph);
@@ -134,6 +133,9 @@ public class MainActivity  extends BlunoLibrary {
         graph.getViewport().setMaxXAxisSize(400);
 		graph.getViewport().setMinY(0);
 		graph.getViewport().setMaxY(60);
+		graph.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
+		graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
+		graph.getGridLabelRenderer().setGridColor(Color.WHITE);
 		graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
 		series = new LineGraphSeries<>();
         series2 = new LineGraphSeries<>();
@@ -151,17 +153,17 @@ public class MainActivity  extends BlunoLibrary {
 
 		graph2LastXValue = 4d;
 
-
-        buttonSerialSend = (Button) findViewById(R.id.buttonSerialSend);		//initial the button for sending the data
-        buttonSerialSend.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				serialSend(serialSendText.getText().toString());				//send the data to the BLUNO
-			}
-		});
+//
+//        buttonSerialSend = (Button) findViewById(R.id.buttonSerialSend);		//initial the button for sending the data
+//        buttonSerialSend.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				//TODO2 Auto-generated method stub
+//
+//				serialSend(serialSendText.getText().toString());				//send the data to the BLUNO
+//			}
+//		});
 
 
         buttonScan = (Button) findViewById(R.id.buttonScan);					//initial the button for scanning the BLE device
@@ -271,18 +273,15 @@ public class MainActivity  extends BlunoLibrary {
 		try
 		{
 			v = Float.parseFloat(theString);
-			//System.out.println (num);
-			//SpeedView speedView = (SpeedView) findViewById(R.id.speedView);
-			speedView.setWithTremble(false);
-			speedView.speedTo(v,0);
-			vRevive=v;
-			if (v>vMax){
-				vMax=v;
-				maxView.setText(String.valueOf(vMax)+"Km/h");
+			if (v<=100) {//interdire des valeurs fausses car trop grandes
+				speedView.setWithTremble(false);
+				speedView.speedTo(v, 0);
+				vRevive = v;
+				if (v > vMax) {
+					vMax = v;
+					maxView.setText(String.valueOf(vMax) + "Km/h");
+				}
 			}
-//			graph2LastXValue += 1d;
-//			series.appendData(new DataPoint(graph2LastXValue, v), true, 400);
-//			series2.appendData(new DataPoint(graph2LastXValue, v+50), true, 400);
 		}catch(NumberFormatException e)
 		{
 			System.out.println("La chaine de caractères n'est pas un nombre parsable!!");
