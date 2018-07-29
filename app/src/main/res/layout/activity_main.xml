@@ -69,7 +69,7 @@
         app:sv_indicator="HalfLineIndicator"
         app:sv_speedTextPosition="CENTER"
         app:sv_speedTextSize="48dp"
-        app:sv_speedTextTypeface="fonts/wwDigital.ttf"
+        app:sv_speedTextTypeface="fonts/digital.ttf"
         app:sv_tickNumber="11"
         app:sv_tickPadding="15dp"
         app:sv_unitUnderSpeedText="true" />
@@ -83,7 +83,7 @@
         android:layout_marginEnd="89dp"
         android:ems="30"
         android:textColor="#FFFFFF"
-        android:text="Max"
+        android:text="Max:"
         android:textSize="25sp" />
 
     <TextView
